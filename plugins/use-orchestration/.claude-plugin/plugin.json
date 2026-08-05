@@ -1,0 +1,13 @@
+{
+  "name": "use-orchestration",
+  "version": "1.0.0",
+  "description": "Plan, coordinate, execute, and verify non-trivial engineering work with task tracking, focused subagents, autonomous debugging, and correction-driven lessons.",
+  "author": {
+    "name": "Berry Development",
+    "email": "eric@berrydev.ai"
+  },
+  "homepage": "https://github.com/berrydev-ai/skills/tree/main/plugins/use-orchestration",
+  "repository": "https://github.com/berrydev-ai/skills",
+  "license": "MIT",
+  "keywords": ["workflow", "planning", "subagents", "verification", "debugging"]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "issue-readiness",
+  "version": "1.0.0",
+  "description": "Assess whether a GitHub issue is ready to implement — checks goal, testable acceptance criteria, scope, and context, then drafts the missing sections.",
+  "author": {
+    "name": "Berry Development",
+    "email": "eric@berrydev.ai"
+  },
+  "homepage": "https://github.com/berrydev-ai/skills/tree/main/plugins/issue-readiness",
+  "repository": "https://github.com/berrydev-ai/skills",
+  "license": "MIT",
+  "keywords": ["github", "issue", "readiness", "acceptance-criteria"]
+}

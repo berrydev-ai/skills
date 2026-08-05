@@ -1,0 +1,4 @@
+interface:
+  display_name: "Use Orchestration"
+  short_description: "Plan, coordinate, verify, and improve work"
+  default_prompt: "Use $use-orchestration to plan, execute, and verify this non-trivial task."

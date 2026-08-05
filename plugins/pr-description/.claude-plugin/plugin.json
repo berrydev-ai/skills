@@ -1,0 +1,13 @@
+{
+  "name": "pr-description",
+  "version": "1.0.0",
+  "description": "Generate or revise pull request and merge request descriptions from branch, diff, commit, issue, and repository evidence.",
+  "author": {
+    "name": "Berry Development",
+    "email": "eric@berrydev.ai"
+  },
+  "homepage": "https://github.com/berrydev-ai/skills/tree/main/plugins/pr-description",
+  "repository": "https://github.com/berrydev-ai/skills",
+  "license": "MIT",
+  "keywords": ["github", "pull-request", "merge-request", "review", "documentation"]
+}

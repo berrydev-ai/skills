@@ -1,0 +1,13 @@
+{
+  "name": "mastra-api-cli",
+  "version": "1.0.0",
+  "description": "Inspect and operate Mastra servers through the `mastra api` CLI — agents, workflows, tools, MCP, memory, observability, datasets, and experiments.",
+  "author": {
+    "name": "Berry Development",
+    "email": "eric@berrydev.ai"
+  },
+  "homepage": "https://github.com/berrydev-ai/skills/tree/main/plugins/mastra-api-cli",
+  "repository": "https://github.com/berrydev-ai/skills",
+  "license": "MIT",
+  "keywords": ["mastra", "cli", "agents", "workflows", "observability"]
+}

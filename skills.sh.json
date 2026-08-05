@@ -1,0 +1,32 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "notGrouped": "bottom",
+  "groupings": [
+    {
+      "title": "Engineering Workflow",
+      "description": "Skills for planning, reviewing, and maintaining software changes.",
+      "skills": [
+        "issue-readiness",
+        "pr-description",
+        "sync-with-primary",
+        "use-orchestration"
+      ]
+    },
+    {
+      "title": "Mastra",
+      "description": "Skills for inspecting and operating Mastra servers.",
+      "skills": [
+        "mastra-api-cli"
+      ]
+    },
+    {
+      "title": "Slack",
+      "description": "Skills for building, posting, and capturing Slack content.",
+      "skills": [
+        "slack-block-kit-builder",
+        "slack-post",
+        "slack-thread-capture"
+      ]
+    }
+  ]
+}
