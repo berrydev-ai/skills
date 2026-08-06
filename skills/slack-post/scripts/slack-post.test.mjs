@@ -1,8 +1,18 @@
 import assert from "node:assert/strict";
 import { describe, test } from "node:test";
-import { parseArgs, resolvePostRequest, runSlackPost } from "./slack-post.mjs";
+import {
+  parseArgs,
+  resolvePostRequest,
+  runSlackPost,
+  usage,
+} from "./slack-post.mjs";
 
 describe("slack-post", () => {
+  test("prints skill-directory-relative usage", () => {
+    assert.match(usage(), /node "\$SKILL_DIR\/scripts\/slack-post\.mjs"/);
+    assert.doesNotMatch(usage(), /node slack-post\/scripts\//);
+  });
+
   test("rejects token and API URL overrides", () => {
     assert.throws(
       () => parseArgs(["--token", "synthetic-old-token", "hello"]),

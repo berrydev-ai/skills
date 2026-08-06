@@ -76,8 +76,8 @@ const CONTAINER_CHILD_TYPES = new Set([
 ]);
 
 const usage = `Usage:
-  node slack-block-kit-builder/scripts/validate-block-kit.mjs <payload.json>
-  node slack-block-kit-builder/scripts/validate-block-kit.mjs < payload.json
+  node "$SKILL_DIR/scripts/validate-block-kit.mjs" <payload.json>
+  node "$SKILL_DIR/scripts/validate-block-kit.mjs" < payload.json
 
 Checks a block array, single block, message payload, modal view, or Home tab view.
 Use Slack Block Kit Builder for final visual and server-side validation.`;

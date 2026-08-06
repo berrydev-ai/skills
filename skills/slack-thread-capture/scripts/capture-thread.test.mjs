@@ -13,6 +13,7 @@ import {
   renderTranscript,
   resolveSlackToken,
   runSlackThreadCapture,
+  usage,
 } from "./capture-thread.mjs";
 
 const tempDirs = [];
@@ -36,6 +37,14 @@ function okSlackResponse(body) {
 }
 
 describe("slack thread capture helpers", () => {
+  test("prints skill-directory-relative usage", () => {
+    assert.match(
+      usage(),
+      /node "\$SKILL_DIR\/scripts\/capture-thread\.mjs"/,
+    );
+    assert.doesNotMatch(usage(), /node slack-thread-capture\/scripts\//);
+  });
+
   test("parses a Slack permalink into a channel and thread timestamp", () => {
     assert.deepEqual(
       parseSlackThreadUrl(

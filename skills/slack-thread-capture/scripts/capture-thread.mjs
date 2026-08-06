@@ -15,8 +15,8 @@ const MAX_RATE_LIMIT_ATTEMPTS = 5;
  */
 export function usage() {
   return `Usage:
-  node slack-thread-capture/scripts/capture-thread.mjs <slack-thread-url> [options]
-  node slack-thread-capture/scripts/capture-thread.mjs --channel <channel-id> --ts <thread-ts> [options]
+  node "$SKILL_DIR/scripts/capture-thread.mjs" <slack-thread-url> [options]
+  node "$SKILL_DIR/scripts/capture-thread.mjs" --channel <channel-id> --ts <thread-ts> [options]
 
 Options:
   --url <url>          Official Slack thread permalink.

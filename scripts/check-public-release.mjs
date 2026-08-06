@@ -33,6 +33,9 @@ const developerPathPatterns = [
   /\b[A-Za-z]:\\Users\\[A-Za-z0-9._-]+\\/g,
 ];
 
+const legacyPluginPathPattern = /^(?:\.claude-plugin|plugins)(?:\/|$)/;
+const canonicalSkillPathPattern = /^skills\/[^/]+\/SKILL\.md$/;
+
 const vendorRoot = ["CLAUDE", "PLUGIN", "ROOT"].join("_");
 const readableModes = new Set(["100644", "100755", "120000"]);
 
@@ -70,6 +73,12 @@ export function findPublicReleaseViolations(entries) {
       violations.push(`${filePath}: tracked private artifact path is not allowed`);
     }
 
+    if (legacyPluginPathPattern.test(filePath)) {
+      violations.push(
+        `${filePath}: legacy plugin packaging is not allowed in the skills.sh catalog`,
+      );
+    }
+
     const isBinary = entry.content.includes(0);
     const content = entry.content.toString("utf8");
     const scannedContent = isBinary
@@ -77,6 +86,12 @@ export function findPublicReleaseViolations(entries) {
       : content;
 
     if (path.posix.basename(filePath) === "SKILL.md") {
+      if (!canonicalSkillPathPattern.test(filePath)) {
+        violations.push(
+          `${filePath}: skills must live under skills/<name>/SKILL.md`,
+        );
+      }
+
       if (isBinary) {
         violations.push(`${filePath}: SKILL.md must be a text file`);
       } else {

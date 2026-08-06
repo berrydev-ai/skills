@@ -7,21 +7,21 @@
 [Berry Development](mailto:eric@berrydev.ai). Each skill is self-contained and
 can be installed independently on compatible agents.
 
-Claude Code marketplace metadata is included as an optional distribution
-adapter. It does not define the skills' identity or runtime contract.
+The repository follows the skills.sh catalog convention: every skill lives at
+`skills/<name>/SKILL.md`, with its scripts and references beside it.
 
 ## Skills
 
 | Skill | What it does |
 | --- | --- |
-| [`issue-readiness`](plugins/issue-readiness/skills/issue-readiness) | Assess whether a GitHub issue is ready to implement, then draft any missing goal, acceptance criteria, scope, or context. |
-| [`mastra-api-cli`](plugins/mastra-api-cli/skills/mastra-api-cli) | Inspect and operate Mastra servers through the `mastra api` CLI. |
-| [`pr-description`](plugins/pr-description/skills/pr-description) | Generate or revise evidence-based pull request and merge request descriptions. |
-| [`slack-block-kit-builder`](slack-block-kit-builder) | Build, debug, and validate Slack Block Kit payloads. |
-| [`slack-post`](slack-post) | Send an explicitly approved Slack text message with a configured bot. |
-| [`slack-thread-capture`](slack-thread-capture) | Capture an authorized Slack thread as JSON, JSONL, text, and summary evidence. |
-| [`sync-with-primary`](plugins/sync-with-primary/skills/sync-with-primary) | Sync a repository's primary branch and merge it into the current branch. |
-| [`use-orchestration`](plugins/use-orchestration/skills/use-orchestration) | Plan, coordinate, execute, and verify non-trivial engineering work. |
+| [`issue-readiness`](skills/issue-readiness) | Assess whether a GitHub issue is ready to implement, then draft any missing goal, acceptance criteria, scope, or context. |
+| [`mastra-api-cli`](skills/mastra-api-cli) | Inspect and operate Mastra servers through the `mastra api` CLI. |
+| [`pr-description`](skills/pr-description) | Generate or revise evidence-based pull request and merge request descriptions. |
+| [`slack-block-kit-builder`](skills/slack-block-kit-builder) | Build, debug, and validate Slack Block Kit payloads. |
+| [`slack-post`](skills/slack-post) | Send an explicitly approved Slack text message with a configured bot. |
+| [`slack-thread-capture`](skills/slack-thread-capture) | Capture an authorized Slack thread as JSON, JSONL, text, and summary evidence. |
+| [`sync-with-primary`](skills/sync-with-primary) | Sync a repository's primary branch and merge it into the current branch. |
+| [`use-orchestration`](skills/use-orchestration) | Plan, coordinate, execute, and verify non-trivial engineering work. |
 
 ## Install with Agent Skills
 
@@ -66,61 +66,51 @@ npx --yes skills add berrydev-ai/skills -g --agent codex --skill '*' -y
 Restart Codex after installing or updating skills. Quote `'*'` so the shell
 does not expand it into local filenames.
 
-### Claude Code marketplace adapter
+### Claude Code
 
-The optional marketplace adapter installs each portable skill as an independent
-Claude Code plugin. Add the marketplace once:
-
-```bash
-/plugin marketplace add berrydev-ai/skills
-```
-
-Then install the skills you want:
+Install all skills for Claude Code in the current project:
 
 ```bash
-/plugin install issue-readiness@berrydev-skills
-/plugin install mastra-api-cli@berrydev-skills
-/plugin install pr-description@berrydev-skills
-/plugin install sync-with-primary@berrydev-skills
-/plugin install use-orchestration@berrydev-skills
+npx --yes skills add berrydev-ai/skills --agent claude-code --skill '*' -y
 ```
 
-The equivalent non-interactive CLI form is:
+Install one skill for Claude Code:
 
 ```bash
-claude plugin install issue-readiness@berrydev-skills --scope user
+npx --yes skills add berrydev-ai/skills --agent claude-code --skill issue-readiness -y
 ```
 
-Use `--scope project` for a shared project installation or `--scope local`
-for a local-only installation. Restart Claude Code after installing.
+Add `-g` to either command for a global installation:
+
+```bash
+npx --yes skills add berrydev-ai/skills -g --agent claude-code --skill '*' -y
+```
+
+Restart Claude Code after installing or updating skills.
 
 ## Repository layout
 
 ```text
 berrydev-skills/
-├── .claude-plugin/
-│   └── marketplace.json          # optional Claude Code catalog adapter
-├── plugins/
+├── skills/
 │   ├── issue-readiness/
-│   │   ├── .claude-plugin/plugin.json
-│   │   └── skills/issue-readiness/
-│   │       ├── SKILL.md
-│   │       └── scripts/fetch-issue.sh
+│   │   ├── SKILL.md
+│   │   └── scripts/fetch-issue.sh
 │   ├── mastra-api-cli/
 │   ├── pr-description/
+│   ├── slack-block-kit-builder/
+│   ├── slack-post/
+│   ├── slack-thread-capture/
 │   ├── sync-with-primary/
 │   └── use-orchestration/
 ├── scripts/
 │   ├── check-public-release.mjs
 │   └── check-public-release.test.mjs
-├── slack-block-kit-builder/
-├── slack-post/
-└── slack-thread-capture/
+└── skills.sh.json
 ```
 
-Every portable skill is rooted at the directory containing its `SKILL.md`.
-Plugin folders add distribution metadata around that portable directory; the
-three Slack skills are already repository-root skill directories.
+`skills.sh.json` controls how the skills are grouped on skills.sh. It does not
+change the skill directories or their runtime behavior.
 
 ## Add a new skill
 
@@ -128,17 +118,15 @@ three Slack skills are already repository-root skill directories.
 > For now, outside contributions are not accepted because this repository is
 > primarily intended for Berry Development's own workflows.
 
-1. Create a skill directory whose name is globally unique within this
-   repository.
+1. Create `skills/<skill-name>/` with a name that is globally unique within
+   this repository.
 2. Add a `SKILL.md` whose frontmatter `name` exactly matches its parent
    directory.
 3. Bundle helper files beneath that skill directory. Instructions must resolve
    `SKILL_DIR` from the loaded `SKILL.md` and reference helpers beneath it,
    such as `$SKILL_DIR/scripts/tool.sh`.
 4. Add deterministic tests for executable behavior.
-5. If Claude Code marketplace distribution is needed, wrap the portable skill
-   in `plugins/<skill-name>/`, add `.claude-plugin/plugin.json`, and register
-   that adapter in `.claude-plugin/marketplace.json`.
+5. Add the skill to the appropriate group in `skills.sh.json`.
 6. Run every validation below.
 
 ## Validate and test locally
@@ -148,7 +136,7 @@ three Slack skills are already repository-root skill directories.
 node scripts/check-public-release.mjs
 
 # All dependency-free Node tests
-node --test scripts/*.test.mjs slack-*/scripts/*.test.mjs
+node --test scripts/*.test.mjs skills/*/scripts/*.test.mjs
 
 # Every tracked shell script
 git ls-files -z '*.sh' | xargs -0 -n1 bash -n
@@ -158,19 +146,13 @@ node -e 'for (const file of require("node:fs").globSync("**/*.json", { exclude: 
 
 # Agent-neutral discovery
 npx --yes skills add . --list
-
-# Optional Claude Code marketplace adapter
-claude plugin validate .
-for plugin in plugins/*; do claude plugin validate "$plugin"; done
 ```
 
 ## Versioning
 
-Portable skills do not depend on marketplace versions. For the optional Claude
-Code adapter, each plugin's version lives in its own
-`.claude-plugin/plugin.json`. Bump it when that plugin changes so installed
-Claude Code users can receive the update. Versions are intentionally not
-duplicated in `marketplace.json`.
+Skills are versioned with this repository. After publishing changes, users can
+refresh installed skills with `npx skills update` or reinstall them with
+`npx skills add`.
 
 ## License
 

@@ -44,6 +44,45 @@ describe("public-release invariants", () => {
     assert.deepEqual(violations, []);
   });
 
+  test("requires the canonical skills.sh catalog layout", () => {
+    const violations = findPublicReleaseViolations([
+      entry(
+        "skills/canonical/SKILL.md",
+        "---\nname: canonical\n---\n# Canonical\n",
+      ),
+      entry(
+        "legacy/SKILL.md",
+        "---\nname: legacy\n---\n# Legacy\n",
+      ),
+      entry(
+        "plugins/wrapped/skills/wrapped/SKILL.md",
+        "---\nname: wrapped\n---\n# Wrapped\n",
+      ),
+      entry(".claude-plugin/marketplace.json", "{}\n"),
+    ]);
+
+    assert.ok(
+      violations.some((value) =>
+        value.includes("legacy/SKILL.md: skills must live under skills/<name>"),
+      ),
+    );
+    assert.ok(
+      violations.some((value) =>
+        value.includes(
+          "plugins/wrapped/skills/wrapped/SKILL.md: skills must live under skills/<name>",
+        ),
+      ),
+    );
+    assert.ok(
+      violations.some((value) =>
+        value.includes(".claude-plugin/marketplace.json: legacy plugin packaging"),
+      ),
+    );
+    assert.ok(
+      !violations.some((value) => value.startsWith("skills/canonical/SKILL.md")),
+    );
+  });
+
   test("rejects private artifacts and gitlinks", () => {
     const violations = findPublicReleaseViolations([
       entry("cache/repos/state", "state"),

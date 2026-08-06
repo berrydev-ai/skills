@@ -11,12 +11,12 @@ const SLACK_POST_MESSAGE_URL = "https://slack.com/api/chat.postMessage";
  */
 export function usage() {
   return `Usage:
-  node slack-post/scripts/slack-post.mjs [message]
+  node "$SKILL_DIR/scripts/slack-post.mjs" [message]
 
 Examples:
-  node slack-post/scripts/slack-post.mjs --prompt "System check complete"
-  node slack-post/scripts/slack-post.mjs --channel <channel-id> --prompt <message>
-  node slack-post/scripts/slack-post.mjs --format json --target-member-id <member-id> <message>
+  node "$SKILL_DIR/scripts/slack-post.mjs" --prompt "System check complete"
+  node "$SKILL_DIR/scripts/slack-post.mjs" --channel <channel-id> --prompt <message>
+  node "$SKILL_DIR/scripts/slack-post.mjs" --format json --target-member-id <member-id> <message>
 
 Configuration:
   SLACK_BOT_TOKEN                Required Slack bot token.

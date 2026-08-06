@@ -1,8 +1,25 @@
 import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 import { describe, test } from "node:test";
 import { validatePayload } from "./validate-block-kit.mjs";
 
 describe("Slack Block Kit validator", () => {
+  test("prints skill-directory-relative usage", () => {
+    const script = fileURLToPath(
+      new URL("./validate-block-kit.mjs", import.meta.url),
+    );
+    const output = execFileSync(process.execPath, [script, "--help"], {
+      encoding: "utf8",
+    });
+
+    assert.match(
+      output,
+      /node "\$SKILL_DIR\/scripts\/validate-block-kit\.mjs"/,
+    );
+    assert.doesNotMatch(output, /node slack-block-kit-builder\/scripts\//);
+  });
+
   test("accepts a message with a fallback and supported blocks", () => {
     const result = validatePayload({
       text: "Deployment status",
