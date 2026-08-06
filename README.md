@@ -10,6 +10,14 @@ can be installed independently on compatible agents.
 The repository follows the skills.sh catalog convention: every skill lives at
 `skills/<name>/SKILL.md`, with its scripts and references beside it.
 
+## Requirements
+
+- Node.js 22.20 or later
+- Git
+
+This repository is public, so GitHub authentication is not required to install
+its skills.
+
 ## Skills
 
 | Skill | What it does |
@@ -63,8 +71,9 @@ Add `-g` to install globally:
 npx --yes skills add berrydev-ai/skills -g --agent codex --skill '*' -y
 ```
 
-Restart Codex after installing or updating skills. Quote `'*'` so the shell
-does not expand it into local filenames.
+If a newly installed or updated skill does not appear in the current Codex
+task, start a new task. Quote `'*'` so the shell does not expand it into local
+filenames.
 
 ### Claude Code
 
@@ -86,12 +95,13 @@ Add `-g` to either command for a global installation:
 npx --yes skills add berrydev-ai/skills -g --agent claude-code --skill '*' -y
 ```
 
-Restart Claude Code after installing or updating skills.
+If a newly installed or updated skill does not appear in the current Claude
+Code session, start a new session.
 
 ## Repository layout
 
 ```text
-berrydev-skills/
+berrydev-ai/skills/
 ├── skills/
 │   ├── issue-readiness/
 │   │   ├── SKILL.md
@@ -131,8 +141,11 @@ change the skill directories or their runtime behavior.
 
 ## Validate and test locally
 
+The public-release checker reads Git's staged index. Stage the intended changes
+before running these validations.
+
 ```bash
-# Public-tree paths, skill identities, portability, and sensitive signatures
+# Staged public-tree paths, skill identities, portability, and sensitive signatures
 node scripts/check-public-release.mjs
 
 # All dependency-free Node tests

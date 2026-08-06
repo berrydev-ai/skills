@@ -10,13 +10,15 @@
 
 ## Message
 
-- Include top-level `text` when predictable notifications and screen-reader fallback matter.
+- For accessibility, either include all necessary content in top-level `text` or omit `text` intentionally so Slack can derive it from supported blocks. Prefer explicit `text` when predictable notifications matter.
 - Use `thread_ts` to reply in a thread.
 - Use `chat.update` and the original `ts` to update a message.
 - Use `chat.postEphemeral` for a user-only response.
 - Use streaming methods for incremental AI text when the app supports Slack's streaming contract.
 
-Message-only blocks include `container`, `context_actions`, `data_visualization`, `file`, `markdown`, `plan`, and `task_card`.
+Message-only authorable blocks include `container`, `context_actions`, `data_visualization`, `markdown`, `plan`, and `task_card`.
+
+`file` is listed as a message block because it appears in retrieved messages containing remote files; Slack's reference says not to add it directly to an app surface.
 
 ## Modal
 
@@ -29,12 +31,16 @@ Message-only blocks include `container`, `context_actions`, `data_visualization`
 
 `alert` is currently modal-only.
 
+Modal-only input elements include `email_text_input`, `file_input`, `number_input`, and `url_text_input`. `datetimepicker` also works in messages; `rich_text_input` also works in Home tabs.
+
 ## Home Tab
 
 - Publish with `views.publish` for one user.
 - Keep content personalized and stable enough to act as an app landing page.
 - Refresh on the app-home-open event when data changes.
 - Use message-and-Home blocks such as `carousel`, `data_table`, and `table` only after confirming current field support.
+- Use `rich_text_input` when formatted input is required.
+- Do not use `email_text_input`, `file_input`, `number_input`, `url_text_input`, `datetimepicker`, or `workflow_button` on Home tabs. Move modal-only fields to a modal and trigger the modal with a regular Home-tab button.
 
 ## Compatibility Rule
 

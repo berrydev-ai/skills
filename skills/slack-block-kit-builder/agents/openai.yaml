@@ -1,0 +1,4 @@
+interface:
+  display_name: "Slack Block Kit Builder"
+  short_description: "Build and validate Slack Block Kit payloads"
+  default_prompt: "Use $slack-block-kit-builder to build and validate this Slack Block Kit payload."

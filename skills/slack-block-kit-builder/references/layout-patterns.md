@@ -6,7 +6,7 @@
 - Put elements inside compatible blocks.
 - Use one accessory in `section.accessory`.
 - Use one form control in `input.element`.
-- Use `container.child_blocks` as the only current block-inside-block exception.
+- Nest block-like objects only in schema-defined fields: supported blocks in `container.child_blocks`, cards in `carousel.elements`, and task cards in `plan.tasks`.
 - Do not put `blocks` inside `section`, `actions`, `context`, or `input`.
 
 ## Ordering
@@ -20,6 +20,17 @@ Use the smallest useful sequence:
 5. Context and attribution.
 
 Use dividers only where they improve scanning.
+
+## Incompatible Requirements
+
+When requested controls do not share a surface:
+
+1. Name each incompatible element and its supported surface.
+2. Choose the surface that supports the primary task.
+3. Move remaining controls to a modal or message, linked with a compatible regular button when needed.
+4. Validate each emitted payload independently.
+
+Never claim a requested all-in-one layout passed validation by omitting element-level surface checks.
 
 ## Common Patterns
 
