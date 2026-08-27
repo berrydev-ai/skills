@@ -1,0 +1,4 @@
+interface:
+  display_name: "DiceBear Image Generator"
+  short_description: "Generate deterministic DiceBear avatar images"
+  default_prompt: "Use $dicebear-image-generator to create a DiceBear avatar image from my style, seed, and options."

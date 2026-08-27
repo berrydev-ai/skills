@@ -13,6 +13,13 @@
       ]
     },
     {
+      "title": "Image Generation",
+      "description": "Skills for deterministic avatar and image asset generation.",
+      "skills": [
+        "dicebear-image-generator"
+      ]
+    },
+    {
       "title": "Mastra",
       "description": "Skills for inspecting and operating Mastra servers.",
       "skills": [
