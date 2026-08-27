@@ -22,6 +22,7 @@ its skills.
 
 | Skill | What it does |
 | --- | --- |
+| [`dicebear-image-generator`](skills/dicebear-image-generator) | Generate deterministic DiceBear avatar images and DiceBear integration guidance. |
 | [`issue-readiness`](skills/issue-readiness) | Assess whether a GitHub issue is ready to implement, then draft any missing goal, acceptance criteria, scope, or context. |
 | [`mastra-api-cli`](skills/mastra-api-cli) | Inspect and operate Mastra servers through the `mastra api` CLI. |
 | [`pr-description`](skills/pr-description) | Generate or revise evidence-based pull request and merge request descriptions. |
@@ -103,6 +104,10 @@ Code session, start a new session.
 ```text
 berrydev-ai/skills/
 ├── skills/
+│   ├── dicebear-image-generator/
+│   │   ├── SKILL.md
+│   │   ├── agents/openai.yaml
+│   │   └── scripts/dicebear_avatar.py
 │   ├── issue-readiness/
 │   │   ├── SKILL.md
 │   │   └── scripts/fetch-issue.sh
