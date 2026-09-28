@@ -6,6 +6,7 @@
       "title": "Engineering Workflow",
       "description": "Skills for planning, reviewing, and maintaining software changes.",
       "skills": [
+        "build-small-stay-aligned",
         "issue-readiness",
         "pr-description",
         "sync-with-primary",
